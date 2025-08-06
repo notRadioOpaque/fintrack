@@ -1,5 +1,41 @@
+"use client";
+
+import { NAV_ITEMS } from "@/lib/constants";
+import { capitalize } from "@/lib/utils";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 const Sidebar = () => {
-  return <div>Sidebar</div>;
+  const pathname = usePathname();
+
+  return (
+    <aside className="w-[320px] flex flex-col">
+      <nav role="navigation" aria-label="Sidebar navigation">
+        <ul className="space-y-1">
+          {NAV_ITEMS.map(({ title, href }) => {
+            const isActive =
+              href === "/" ? pathname === "/" : pathname.startsWith(`/${href}`);
+
+            return (
+              <li key={title}>
+                <Link
+                  href={href}
+                  aria-current={isActive ? "page" : undefined}
+                  className={`h-9 rounded-2xl flex items-center px-[18px] text-[15px] font-medium transition-colors ${
+                    isActive
+                      ? "bg-secondary-bg/16 text-[#3A6C7B]"
+                      : "hover:bg-gray-100"
+                  }`}
+                >
+                  {capitalize(title)}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+    </aside>
+  );
 };
 
 export default Sidebar;

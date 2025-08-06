@@ -29,7 +29,7 @@ const NAV_CTAS = [
 
 const Header = () => {
   return (
-    <header className="h-16 border flex items-center justify-between">
+    <header className="h-16 flex items-center justify-between">
       <div className="flex items-center gap-7 justify-between w-max">
         <button className="cursor-pointer">
           <Image src={menu_icon} alt="logo" width={24} height={24} />

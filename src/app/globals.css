@@ -6,12 +6,15 @@
 
   --button-bg: oklch(0.602 0.0722 220.46);
   --secondary-bg: oklch(0.4662 0.0544 220.23);
-  --secondary-foreground: oklch(0.5571 0.066 219.08);
+  --secondary-fg: oklch(0.5571 0.066 219.08);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-button-bg: var(--button-bg);
+  --color-secondary-bg: var(--secondary-bg);
+  --color-secondary-fg: var(--secondary--fg);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
