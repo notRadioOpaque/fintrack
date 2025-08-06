@@ -1,31 +1,7 @@
 import Image from "next/image";
 import Logo from "./logo";
-import { app_grid_icon, menu_icon, search_icon } from "@/assets/icons";
-import { image_1 } from "@/assets/images";
-
-const NAV_CTAS = [
-  {
-    alt: "search icon",
-    src: search_icon,
-    action: () => {},
-    width: 24,
-    height: 24,
-  },
-  {
-    alt: "app grid",
-    src: app_grid_icon,
-    action: () => {},
-    width: 24,
-    height: 24,
-  },
-  {
-    alt: "profile image",
-    src: image_1,
-    action: () => {},
-    width: 40,
-    height: 40,
-  },
-];
+import { NAV_CTAS } from "@/lib/constants";
+import { menu_icon } from "@/assets/icons";
 
 const Header = () => {
   return (
@@ -39,7 +15,7 @@ const Header = () => {
       </div>
 
       <div className="gap-7 flex items-center">
-        {NAV_CTAS.map(({ alt, src, action, width, height }) => (
+        {NAV_CTAS.map(({ alt, src, width, height }) => (
           <button key={alt}>
             <Image src={src} alt="search icon" width={width} height={height} />
           </button>
