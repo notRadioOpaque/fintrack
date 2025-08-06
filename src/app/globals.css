@@ -2,7 +2,11 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1b2528;
+
+  --button-bg: oklch(0.602 0.0722 220.46);
+  --secondary-bg: oklch(0.4662 0.0544 220.23);
+  --secondary-foreground: oklch(0.5571 0.066 219.08);
 }
 
 @theme inline {
@@ -12,12 +16,14 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
+
+/* re-enable dark mode later, but for now, its all love and light :) */
 
 body {
   background: var(--background);
