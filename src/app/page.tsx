@@ -1,9 +1,18 @@
+import Header from "@/components/header";
+import Sidebar from "@/components/sidebar";
+
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
+    <div className="font-sans flex flex-col min-h-screen px-12 pb-12">
       {/* TODO: header component goes here */}
+      <Header />
 
       {/* TODO: main content goes here */}
+      <main className="flex flex-1 border">
+        <Sidebar />
+
+        <section></section>
+      </main>
     </div>
   );
 }
