@@ -1,15 +1,17 @@
 "use client";
 
 import * as React from "react";
-import { ReactNode } from "react";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import classNames from "classnames";
 import { useRouter } from "next/navigation";
+import { Icon } from "@iconify/react";
 
 export interface TableColumn<T> {
   header: string | React.JSX.Element;
   cell: ReactNode | ((item: T) => ReactNode) | string;
   loader?: ReactNode;
+  accessor?: keyof T;
+  sortable?: boolean;
 }
 
 interface TableProps<T> {
@@ -32,7 +34,6 @@ const Table = <T,>({
   columns,
   data = [],
   isLoading = false,
-  // errorMessage = '',
   tableClassName = "",
   tdClassName = "",
   trClassName = "",
@@ -45,24 +46,55 @@ const Table = <T,>({
   emptyStateLabel = "Nothing to show",
 }: TableProps<T>) => {
   const [selectedRow, setSelectedRow] = useState<T>();
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  const [loading, setLoading] = useState(true);
+  // Sorting state
+  const [sortConfig, setSortConfig] = useState<{
+    key?: keyof T;
+    direction: "asc" | "desc";
+  }>({ key: undefined, direction: "asc" });
 
-  const handleIframeLoad = () => {
-    setLoading(false);
+  const handleIframeLoad = () => setLoading(false);
+
+  // Sorting logic
+  const sortedData = React.useMemo(() => {
+    if (!sortConfig.key) return data;
+
+    return [...data].sort((a, b) => {
+      const aVal = a[sortConfig.key!];
+      const bVal = b[sortConfig.key!];
+
+      if (typeof aVal === "string" && typeof bVal === "string") {
+        return sortConfig.direction === "asc"
+          ? aVal.localeCompare(bVal)
+          : bVal.localeCompare(aVal);
+      }
+
+      if (typeof aVal === "number" && typeof bVal === "number") {
+        return sortConfig.direction === "asc" ? aVal - bVal : bVal - aVal;
+      }
+
+      return 0;
+    });
+  }, [data, sortConfig]);
+
+  const requestSort = (key?: keyof T) => {
+    if (!key) return;
+    setSortConfig((prev) => ({
+      key,
+      direction: prev.key === key && prev.direction === "asc" ? "desc" : "asc",
+    }));
   };
 
   if (!isLoading && !data?.length) {
     return (
       <div
-        className={`dark:border-dark-stroke relative flex h-[368px] flex-col items-center justify-center gap-3 rounded-xl pt-[2rem] ${tableClassName}`}
+        className={`relative flex h-[368px] flex-col items-center justify-center gap-3 rounded-xl pt-[2rem] ${tableClassName}`}
       >
-        {loading ? (
-          <div className="absolute top-[50%] left-[50%] grid h-[200px] w-[200px] translate-x-[-50%] translate-y-[-50%] place-items-center">
-            {/* <SectionLoading /> */}
-          </div>
-        ) : null}
+        {loading && (
+          <div className="absolute top-[50%] left-[50%] grid h-[200px] w-[200px] translate-x-[-50%] translate-y-[-50%] place-items-center"></div>
+        )}
 
         {!isSearchParams ? (
           <>
@@ -74,12 +106,11 @@ const Table = <T,>({
               width="270"
               onLoad={handleIframeLoad}
             />
-
             <p className="text-charleston-green-30 text-sm font-medium">
               {emptyStateLabel}
             </p>
             <button
-              className="text-orange-accent-100 text-sm font-medium hover:underline"
+              className="text-sm font-medium hover:underline"
               type="button"
               onClick={() => {
                 if (!emptyStateLink) return;
@@ -103,9 +134,7 @@ const Table = <T,>({
               width="270"
               onLoad={handleIframeLoad}
             />
-            <p className="text-charleston-green-30 text-sm font-medium">
-              No item matches your search
-            </p>
+            <p className="text-sm font-medium">No item matches your search</p>
           </>
         )}
       </div>
@@ -115,42 +144,69 @@ const Table = <T,>({
   return (
     <div className="block w-full">
       <div
-        className={`${tableClassName} border-gray-accent-300 dark:border-dark-stroke relative !z-[30] w-full overflow-x-scroll !rounded-t-[4px]`}
+        className={`${tableClassName} relative !z-[30] w-full overflow-x-auto !rounded-t-[4px]`}
       >
         <table className="w-full">
-          <thead>
-            <tr className="global-subtext bg-gray-accent-50 dark:bg-dark-stroke dark:text-dark-text">
-              {columns.map((column, index) => (
-                <th
-                  key={String(index + 1)}
-                  className={classNames(
-                    `text-12 border border-zinc-500 px-[0.813rem] py-[14px] align-middle font-semibold whitespace-nowrap first:rounded-tl-[4px] last:rounded-tr-[4px] ${thClassName}`
-                  )}
-                >
-                  {column.header}
-                </th>
-              ))}
+          <thead className="w-full">
+            <tr className="">
+              {columns.map((column, index) => {
+                return (
+                  <th
+                    key={String(index)}
+                    className={classNames(
+                      `h-8 text-[#15272D]/62 font-medium pr-4 last:pr-0 w-full text-sm whitespace-nowrap first:rounded-tl-[4px] last:rounded-tr-[4px] ${thClassName}`,
+                      { "cursor-pointer select-none": column.sortable }
+                    )}
+                    onClick={() =>
+                      column.sortable && requestSort(column.accessor)
+                    }
+                  >
+                    <div className="flex items-center border-b border-gray-200 h-full gap-2.5">
+                      {column.header}
+                      {column.sortable && (
+                        <>
+                          {sortConfig.key === column.accessor ? (
+                            sortConfig.direction === "asc" ? (
+                              <Icon
+                                icon="flowbite:caret-down-solid"
+                                className="w-4 h-4 text-[#3E7383]"
+                              />
+                            ) : (
+                              <Icon
+                                icon="flowbite:caret-up-solid"
+                                className="w-4 h-4 text-[#3E7383]"
+                              />
+                            )
+                          ) : (
+                            <Icon
+                              icon="flowbite:caret-down-solid"
+                              className="w-4 h-4 text-gray-300"
+                            />
+                          )}
+                        </>
+                      )}
+                    </div>
+                  </th>
+                );
+              })}
             </tr>
           </thead>
-          <tbody className="divide-grey-outline dark:divide-dark-stroke divide-y">
+          <tbody className="">
             {isLoading
-              ? // Render a loading skeleton while data is being fetched
-                [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+              ? [1, 2, 3, 4, 5].map((num) => (
                   <tr key={num}>
-                    {columns.map((_column, columnIndex) => (
+                    {columns.map((_column, colIndex) => (
                       <td
-                        key={String(columnIndex + 1)}
+                        key={String(colIndex)}
                         aria-label="loader"
-                        className="h-[44px] px-[0.813rem] align-middle text-sm whitespace-nowrap"
-                      >
-                        {/* <SkeletonLoader /> */}
-                      </td>
+                        className="h-[44px] px-[0.813rem] text-sm whitespace-nowrap"
+                      ></td>
                     ))}
                   </tr>
                 ))
-              : data?.map((item, rowIndex) => (
+              : sortedData.map((item, rowIndex) => (
                   <tr
-                    key={String(rowIndex + 1)}
+                    key={String(rowIndex)}
                     className={classNames(
                       `transition-all duration-300 ${trClassName}`,
                       {
@@ -167,11 +223,11 @@ const Table = <T,>({
                       }
                     }}
                   >
-                    {columns.map((column, columnIndex) => (
+                    {columns.map((column, colIndex) => (
                       <td
-                        key={String(columnIndex + 1)}
+                        key={String(colIndex)}
                         className={classNames(
-                          `border border-zinc-500 px-[0.813rem] align-middle text-[14px] font-semibold whitespace-nowrap capitalize ${tdClassName} ${cellClassName}`
+                          `h-14 align-middle text-[15px] text-[#1B2528] font-normal whitespace-nowrap capitalize ${tdClassName} ${cellClassName}`
                         )}
                       >
                         {typeof column.cell === "function"

@@ -6,6 +6,7 @@ import Tabs from "./dashboard-tab";
 import DashboardSummary from "./dashboard-summary";
 import { dashboardSummaryData, transactions } from "@/lib/constants";
 import Table from "./table";
+import TransactionTable from "./transaction-table";
 
 const DashBoardBody = () => {
   const [activeTab, setActiveTab] = useState<string>("overview");
@@ -56,13 +57,8 @@ const DashBoardBody = () => {
           <div className="flex flex-col gap-7">
             <DashboardSummary summary={dashboardSummaryData} />
 
-            <div className="border">
-              <Table
-                columns={columns}
-                data={transactions || []}
-                tableString="List of status codes"
-                onRowClick={() => {}}
-              />
+            <div className="">
+              <TransactionTable />
             </div>
           </div>
         )}
