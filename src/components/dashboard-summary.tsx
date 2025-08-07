@@ -1,5 +1,6 @@
 import { Summary } from "@/types";
 import { SummaryCard } from "./summary-card";
+import { formatCurrency } from "@/lib/utils";
 
 interface SummaryGroupProps {
   summary: Summary;
@@ -9,22 +10,22 @@ const DashboardSummary = ({ summary }: SummaryGroupProps) => {
   const cards = [
     {
       title: "Total Balance",
-      value: summary.totalBalance,
+      value: formatCurrency(summary.totalBalance),
       change: summary.balanceChange,
     },
     {
       title: "Total Credits",
-      value: summary.totalCredits,
+      value: formatCurrency(summary.totalCredits),
       change: summary.creditsChange,
     },
     {
       title: "Total Debits",
-      value: summary.totalDebits,
+      value: formatCurrency(summary.totalDebits),
       change: summary.debitsChange,
     },
     {
       title: "Transactions",
-      value: summary.transactionCount,
+      value: formatCurrency(summary.transactionCount),
       change: summary.transactionChange,
     },
   ];
