@@ -37,3 +37,11 @@ body {
 button {
   cursor: pointer;
 }
+
+.hide-scrollbar {
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}

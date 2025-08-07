@@ -9,7 +9,7 @@ const Sidebar = () => {
   const pathname = usePathname();
 
   return (
-    <aside className="w-[320px] flex flex-col">
+    <aside className="w-[320px] flex-shrink-0 flex flex-col">
       <nav role="navigation" aria-label="Sidebar navigation">
         <ul className="space-y-1">
           {NAV_ITEMS.map(({ title, href }) => {
