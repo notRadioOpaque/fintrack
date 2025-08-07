@@ -32,7 +32,11 @@ export default function TransactionTable() {
       header: "Amount",
       accessor: "amount",
       cell: (item) => (
-        <div className="h-full mr-[18px] flex items-center border-b border-gray-200">
+        <div
+          className={`h-full mr-[18px] flex items-center border-b border-gray-200 ${
+            item.type !== "Credit" ? "text-red-500" : "text-green-500"
+          }`}
+        >
           {formatCurrency(item.amount.toString())}
         </div>
       ),

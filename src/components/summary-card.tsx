@@ -13,6 +13,8 @@ export function SummaryCard({
   change,
   isLoading = false,
 }: SummaryCardProps) {
+  const colorClass = Number(change) < 0 ? "text-red-500" : "text-[#3E7383]";
+
   return (
     <div className="bg-[#34616F]/9 rounded-[20px] p-4 md:p-7 flex flex-col gap-3 md:gap-[18px] w-full">
       <div className="flex items-center justify-between">
@@ -36,7 +38,7 @@ export function SummaryCard({
       {isLoading ? (
         <div className="h-3 w-12 bg-[#34616F]/18 rounded animate-pulse" />
       ) : (
-        <span className={`text-xs text-[#3E7383]`}>
+        <span className={`text-xs  ${colorClass}`}>
           {change >= 0 ? `+${change}%` : `${change}%`}
         </span>
       )}
