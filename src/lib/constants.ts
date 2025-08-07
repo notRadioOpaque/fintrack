@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
 
-import { app_grid_icon, search_icon } from "@/assets/icons";
 import { image_1, image_2, image_3, image_4 } from "@/assets/images";
 import { Summary, Transaction } from "@/types";
 
@@ -20,30 +19,6 @@ export const NAV_ITEMS = [
   {
     title: "settings",
     href: "settings",
-  },
-];
-
-export const NAV_CTAS = [
-  {
-    alt: "search icon",
-    src: search_icon,
-    action: () => {},
-    width: 24,
-    height: 24,
-  },
-  {
-    alt: "app grid",
-    src: app_grid_icon,
-    action: () => {},
-    width: 24,
-    height: 24,
-  },
-  {
-    alt: "profile image",
-    src: image_1,
-    action: () => {},
-    width: 40,
-    height: 40,
   },
 ];
 
