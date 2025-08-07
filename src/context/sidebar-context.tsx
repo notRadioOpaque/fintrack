@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 const SidebarContext = createContext({
   isSidebarOpen: true,
@@ -12,12 +12,7 @@ export const SidebarProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
-
-  useEffect(() => {
-    const isMobile = window.innerWidth < 768;
-    setIsSidebarOpen(!isMobile);
-  }, []);
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 
   const toggleSidebar = () => setIsSidebarOpen((prev) => !prev);
 
