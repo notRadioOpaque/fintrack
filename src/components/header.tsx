@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import Logo from "./logo";
-import { NAV_CTAS } from "@/lib/constants";
 import { useSidebar } from "@/context/sidebar-context";
 import { Icon } from "@iconify/react";
+import { image_1 } from "@/assets/images";
 
 const Header = () => {
   const { toggleSidebar } = useSidebar();
@@ -20,11 +20,17 @@ const Header = () => {
       </div>
 
       <div className="gap-7 flex items-center">
-        {NAV_CTAS.map(({ alt, src, width, height }) => (
-          <button key={alt}>
-            <Image src={src} alt={alt} width={width} height={height} />
-          </button>
-        ))}
+        <button className="hidden sm:block">
+          <Icon icon="iconamoon:search" width="28" height="28" />
+        </button>
+
+        <button className="hidden sm:block">
+          <Icon icon="mage:dashboard" width="28" height="28" />
+        </button>
+
+        <button>
+          <Image src={image_1} alt="profile" width={40} height={40} />
+        </button>
       </div>
     </header>
   );

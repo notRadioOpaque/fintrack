@@ -9,12 +9,21 @@ import { usePathname } from "next/navigation";
 const Sidebar = () => {
   const pathname = usePathname();
 
-  const { isSidebarOpen } = useSidebar();
+  const { isSidebarOpen, toggleSidebar } = useSidebar();
+
+  // handler fn to close sidebar on mobile screens
+  const handleNavClick = () => {
+    if (window.innerWidth < 1024) {
+      setTimeout(() => {
+        toggleSidebar();
+      }, 400);
+    }
+  };
 
   return (
     <aside
       className={`transition-all duration-300 ${
-        isSidebarOpen ? "w-[320px] mr-12" : "w-0 mr-0 overflow-hidden"
+        isSidebarOpen ? "w-full lg:w-[320px] mr-12" : "w-0 mr-0 overflow-hidden"
       } flex-shrink-0 flex flex-col`}
     >
       <nav role="navigation" aria-label="Sidebar navigation">
@@ -27,6 +36,7 @@ const Sidebar = () => {
               <li key={title}>
                 <Link
                   href={href}
+                  onClick={handleNavClick}
                   aria-current={isActive ? "page" : undefined}
                   className={`h-9 rounded-2xl flex items-center px-[18px] text-[15px] font-medium transition-colors ${
                     isActive

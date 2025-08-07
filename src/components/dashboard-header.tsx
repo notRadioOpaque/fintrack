@@ -10,13 +10,15 @@ const DashBoardHeader = () => {
     <div className="flex flex-col gap-8">
       <div className="flex justify-between">
         <div className="flex items-center">
-          <h3 className="text-4xl font-bold">Wallet Ledger</h3>
+          <h3 className="text-xl sm:text-4xl font-bold">Wallet Ledger</h3>
 
           <button className="ml-2 mr-4">
             <Icon icon="flowbite:caret-down-solid" className="h-4 w-4" />
           </button>
 
-          <StatusBadge label="Active" dotColor="bg-green-600" />
+          <div className="hidden md:block">
+            <StatusBadge label="Active" dotColor="bg-green-600" />
+          </div>
         </div>
 
         <div className="flex gap-3">

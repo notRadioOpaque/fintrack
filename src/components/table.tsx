@@ -227,7 +227,7 @@ const Table = <T,>({
                       <td
                         key={String(colIndex)}
                         className={classNames(
-                          `h-14 align-middle text-[15px] text-[#1B2528] font-normal whitespace-nowrap capitalize ${tdClassName} ${cellClassName}`
+                          `h-14 align-middle text-[13px] md:text-[15px] text-[#1B2528] font-normal whitespace-nowrap capitalize ${tdClassName} ${cellClassName}`
                         )}
                       >
                         {typeof column.cell === "function"

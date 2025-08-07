@@ -31,7 +31,7 @@ export default function RootLayout({
         className={`${publicSans.variable} ${geistMono.variable} antialiased`}
       >
         <SidebarProvider>
-          <div className="font-sans flex gap-7 flex-col h-screen px-12 pb-12">
+          <div className="font-sans flex gap-7 flex-col h-screen px-6 pb-6 sm:px-8 sm:pb-8 lg:px-12 lg:pb-12">
             <Header />
 
             <main className="flex flex-1 overflow-hidden">
