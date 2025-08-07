@@ -194,13 +194,15 @@ const Table = <T,>({
           <tbody className="">
             {isLoading
               ? [1, 2, 3, 4, 5].map((num) => (
-                  <tr key={num}>
+                  <tr key={num} className="">
                     {columns.map((_column, colIndex) => (
                       <td
                         key={String(colIndex)}
                         aria-label="loader"
-                        className="h-[44px] px-[0.813rem] text-sm whitespace-nowrap"
-                      ></td>
+                        className="h-14 pr-4 last:pr-0 text-sm whitespace-nowrap"
+                      >
+                        <div className="h-[60%] border-b border-gray-200 bg-gray-100 animate-pulse"></div>
+                      </td>
                     ))}
                   </tr>
                 ))

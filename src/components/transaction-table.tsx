@@ -63,5 +63,7 @@ export default function TransactionTable() {
     },
   ];
 
-  return <Table columns={columns} data={transactions || []} />;
+  return (
+    <Table columns={columns} isLoading={false} data={transactions || []} /> // change value of isLoading for loading state
+  );
 }
