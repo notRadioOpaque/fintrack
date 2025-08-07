@@ -12,7 +12,7 @@ export default function StatusBadge({ label, dotColor }: StatusBadgeProps) {
         className={clsx("w-1.5 h-1.5 rounded-full mr-2", dotColor)}
         aria-hidden="true"
       ></span>
-      <span className="text-sm font-medium">{label}</span>
+      <span className="text-[15px] font-medium">{label}</span>
     </div>
   );
 }

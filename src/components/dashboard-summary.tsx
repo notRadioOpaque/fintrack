@@ -25,7 +25,7 @@ const DashboardSummary = ({ summary }: SummaryGroupProps) => {
     },
     {
       title: "Transactions",
-      value: formatCurrency(summary.transactionCount),
+      value: summary.transactionCount.toString(),
       change: summary.transactionChange,
     },
   ];

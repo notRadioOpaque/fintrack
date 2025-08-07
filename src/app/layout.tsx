@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Public_Sans } from "next/font/google";
+import { Public_Sans } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
@@ -7,11 +7,6 @@ import { SidebarProvider } from "@/context/sidebar-context";
 
 const publicSans = Public_Sans({
   variable: "--font-public-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
@@ -27,9 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${publicSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${publicSans.variable} antialiased`}>
         <SidebarProvider>
           <div className="w-full max-w-[1440px] mx-auto font-sans flex gap-7 flex-col h-screen px-6 pb-6 sm:px-8 sm:pb-8 lg:px-12 lg:pb-12">
             <Header />
