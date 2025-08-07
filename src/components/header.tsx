@@ -21,11 +21,11 @@ const Header = () => {
 
       <div className="gap-7 flex items-center">
         <button className="hidden sm:block">
-          <Icon icon="iconamoon:search" width="28" height="28" />
+          <Icon icon="iconamoon:search" width="24" height="24" />
         </button>
 
         <button className="hidden sm:block">
-          <Icon icon="mage:dashboard" width="28" height="28" />
+          <Icon icon="mage:dashboard" width="24" height="24" />
         </button>
 
         <button>

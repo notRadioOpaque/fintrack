@@ -33,7 +33,7 @@ const DashboardSummary = ({ summary }: SummaryGroupProps) => {
   return (
     <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {cards.map((card, idx) => (
-        <SummaryCard key={idx} {...card} />
+        <SummaryCard key={idx} {...card} isLoading={true} />
       ))}
     </div>
   );
