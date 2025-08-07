@@ -1,14 +1,19 @@
+"use client";
+
 import Image from "next/image";
 import Logo from "./logo";
 import { NAV_CTAS } from "@/lib/constants";
-import { menu_icon } from "@/assets/icons";
+import { useSidebar } from "@/context/sidebar-context";
+import { Icon } from "@iconify/react";
 
 const Header = () => {
+  const { toggleSidebar } = useSidebar();
+
   return (
     <header className="h-16 flex items-center justify-between">
       <div className="flex items-center gap-7 justify-between w-max">
-        <button className="cursor-pointer">
-          <Image src={menu_icon} alt="logo" width={24} height={24} />
+        <button onClick={toggleSidebar} className="cursor-pointer">
+          <Icon icon="quill:hamburger" className="h-7 w-7" />
         </button>
 
         <Logo />
@@ -17,7 +22,7 @@ const Header = () => {
       <div className="gap-7 flex items-center">
         {NAV_CTAS.map(({ alt, src, width, height }) => (
           <button key={alt}>
-            <Image src={src} alt="search icon" width={width} height={height} />
+            <Image src={src} alt={alt} width={width} height={height} />
           </button>
         ))}
       </div>

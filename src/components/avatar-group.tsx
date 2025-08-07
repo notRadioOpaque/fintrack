@@ -43,7 +43,7 @@ export default function AvatarGroup({
         })}
       </div>
 
-      <span className="ml-4 text-sm text-gray-600">
+      <span className="ml-4 text-sm text-gray-500">
         {displayNames}
         {extraCount > 0 && ` +${extraCount} others`}
       </span>
